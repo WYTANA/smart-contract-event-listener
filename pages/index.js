@@ -3,6 +3,8 @@ import { useState } from "react"
 const Index = () => {
   const [contractAddress, setContractAddress] = useState("")
   const [events, setEvents] = useState([])
+  const [url, setURL] = useState("")
+  const [selectedEvent, setSelectedEvent] = useState("")
 
   const submitContractAddress = (e) => {
     e.preventDefault()
@@ -30,7 +32,7 @@ const Index = () => {
   const createListener = (e) => {
     e.preventDefault()
 
-    console.log("Listener created!")
+    console.log(events[selectedEvent])
   }
 
   return (
@@ -63,7 +65,12 @@ const Index = () => {
                 key={index}
                 className="border-solid rounded-lg border-4 p-5 m-2"
               >
-                <input type="radio" name="event" id="" value={index} />
+                <input
+                  type="radio"
+                  name="event"
+                  onChange={(e) => setSelectedEvent(e.target.value)}
+                  value={index}
+                />
                 <h3 className="font-bold text-white">{event.name}</h3>
                 <p className="text-orange-500">
                   {event.inputs.map((input, index) => {
@@ -87,12 +94,13 @@ const Index = () => {
             <p className="text-green-300">What to do when we hear an event?</p>
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="url"
+              htmlFor="url"
             ></label>
             <input
               type="text"
               className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-1/3 appearance-none leading-normal"
               placeholder="URL"
+              onChange={(e) => setURL(e.target.value)}
             />
             <br />
             <button
