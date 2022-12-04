@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { FaTwitter, FaLinkedin } from "react-icons/fa"
+
+import "../styles/Home.module.css"
 
 const Index = () => {
   const [contractAddress, setContractAddress] = useState("")
@@ -8,7 +11,6 @@ const Index = () => {
 
   const submitContractAddress = (e) => {
     e.preventDefault()
-    console.log(contractAddress)
 
     fetch("/api/getABI", {
       method: "POST",
@@ -32,14 +34,17 @@ const Index = () => {
   const createListener = (e) => {
     e.preventDefault()
 
-    console.log(events[selectedEvent])
+    console.log("Events: ", events[selectedEvent])
   }
 
   return (
-    <div className="grid grid-cols-3">
-      <div className="flex flex-col items-center justify-center h-screen">
+    <div className="grid grid-cols-4">
+      <div className="flex flex-col items-center justify-center h-screen col-span-1">
+        <div className="font-bold text-2xl text-green-300">Address Input</div>
+        <span className="text-purple-300">{contractAddress}</span>
+
         <input
-          className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-3/5 appearance-none leading-normal"
+          className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-10/12 appearance-none leading-normal text-black"
           type="text"
           placeholder="Contract Address"
           onChange={(e) => setContractAddress(e.target.value)}
@@ -51,11 +56,30 @@ const Index = () => {
         >
           Next
         </button>
+        <br />
+        <div className="w-1/5 flex flex-row justify-between items-center text-3xl">
+          <a
+            href="https://twitter.com/tlorback"
+            target="_blank"
+            rel="noreferrer"
+            className="w-full h-10 text-3xl hover:text-purple-600"
+          >
+            <FaTwitter />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/travislorback/"
+            target="_blank"
+            rel="noreferrer"
+            className="w-full h-10 text-3xl hover:text-green-600"
+          >
+            <FaLinkedin />
+          </a>
+        </div>
       </div>
-      <div className="grid m-10">
+      <div className="grid m-10 col-span-2">
         {events.length > 0 && (
-          <h1 className="font-bold text-2xl col-span-2 text-red-300">
-            Events Available
+          <h1 className="font-bold text-2xl col-span-2 text-red-300 flex justify-center items-center">
+            Mainnet Events Available
           </h1>
         )}
         {events.length > 0 &&
@@ -72,11 +96,11 @@ const Index = () => {
                   value={index}
                 />
                 <h3 className="font-bold text-white">{event.name}</h3>
-                <p className="text-orange-500">
+                <p className="text-orange-500 flex flex-col">
                   {event.inputs.map((input, index) => {
                     return (
                       <span key={index}>
-                        {input.name} - {input.type}
+                        {input.name} - {input.type},
                       </span>
                     )
                   })}
@@ -87,18 +111,20 @@ const Index = () => {
       </div>
       <div>
         {events.length > 0 && (
-          <div className="flex flex-col items-center justify-center h-screen">
+          <div className="flex flex-col items-center justify-center h-screen col-span-1">
             <div className="font-bold text-2xl text-green-300">
-              Event Action
+              Event Data Storage
             </div>
-            <p className="text-green-300">What to do when we hear an event?</p>
+            <p className="text-green-300">
+              Where do you want to store the data?
+            </p>
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="url"
             ></label>
             <input
               type="text"
-              className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-1/3 appearance-none leading-normal"
+              className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-10/12 appearance-none leading-normal"
               placeholder="URL"
               onChange={(e) => setURL(e.target.value)}
             />

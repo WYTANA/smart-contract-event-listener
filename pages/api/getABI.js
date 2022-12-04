@@ -16,6 +16,4 @@ export default function handler(req, res) {
     .finally(() => {
       res.end()
     })
-
-  // res.status(200).json({ name: "John Doe" })
 }
